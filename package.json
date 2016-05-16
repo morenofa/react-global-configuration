@@ -1,0 +1,42 @@
+{
+  "name": "react-global-configuration",
+  "version": "1.0.0",
+  "description": "For setting a global config object managed as a requirement",
+  "main": "build/index.js",
+  "scripts": {
+    "build": "gulp build",
+    "test": "gulp build && gulp test",
+    "lint": "gulp lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/morenofa/react-global-configuration.git"
+  },
+  "keywords": [
+    "react",
+    "global",
+    "configurator"
+  ],
+  "author": "@moreno_fa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/morenofa/react-global-configuration/issues"
+  },
+  "homepage": "https://github.com/morenofa/react-global-configuration#readme",
+  "devDependencies": {
+    "babel": "^5.3.3",
+    "chai": "^2.3.0",
+    "gulp": "^3.8.11",
+    "gulp-babel": "^5.1.0",
+    "gulp-debug": "^2.0.1",
+    "gulp-eslint": "^0.12.0",
+    "gulp-istanbul": "^0.9.0",
+    "gulp-mocha": "^2.0.1",
+    "gulp-strip-debug": "^1.0.2",
+    "yargs": "^3.9.0"
+  },
+  "dependencies": {
+    "deep-freeze": "0.0.1",
+    "object-assign": "^2.0.0"
+  }
+}

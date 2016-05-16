@@ -1,0 +1,64 @@
+{
+    // http://eslint.org/docs/user-guide/configuring
+    "ecmaFeatures": {
+        "modules": true,
+        "blockBindings": true,
+        "templateStrings": true,
+        "arrowFunctions": true,
+        "templateStrings": true,
+        "classes": true
+    },
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    // http://eslint.org/docs/rules/
+    "rules": {
+        // Possible Errors
+        "valid-jsdoc": [ 1, true ],
+        "quotes": [ 2, "single" ],
+
+        // Best Practices
+        "complexity": [ 1, 6 ],
+        "default-case": [ 2, true ],
+        "no-else-return": [ 2, true ],
+        "no-new": false,
+        "no-self-compare": [ 2, true ],
+        "no-void": [ 2, true ],
+        "radix": [ 2, true ],
+        "wrap-iife": [ 2, true ],
+
+        // Strict Mode
+        "strict": 2,
+
+        // Variables
+        "no-undefined": [ 2, true ],
+        "no-use-before-define": [2, "nofunc"],
+
+        // Stylistic Issues
+        "indent": [ 2, 4 ],
+        "consistent-this": [ 2, "self" ],
+        "func-names": [ 2, true ],
+        "func-style": [ 1, "declaration" ],
+        "no-multiple-empty-lines": [ 1, true ],
+        "no-nested-ternary": [ 2, true ],
+        "operator-assignment": [ 2, "always" ],
+        "padded-blocks": [ 2, "never" ],
+        "space-after-function-name": [ 2, "never" ],
+        "space-after-keywords": [ 2, "always" ],
+        "space-before-blocks": [ 2, "always" ],
+        "space-in-brackets": [ 2, "always" ],
+        "space-in-parens": [ 2, "never", { "exceptions": [] } ],
+        "wrap-regex": [ 2, true ],
+
+        // Legacy
+        "max-depth": [ 1, 4 ],
+        "max-len": [ 1, 120 ],
+        "max-params": [ 1, 4 ],
+        "max-statements": [ 1, 12 ],
+        "no-bitwise": [ 2, true ],
+
+        // ES6
+        "no-var": [ 2, true ]
+    }
+}

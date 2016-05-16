@@ -1,0 +1,20 @@
+# Optional npm cache directory
+.npm
+
+# Coverage directory used by tools like istanbul
+coverage
+
+# Dependency directories
+node_modules
+
+# Miscellaneous
+*~
+*#
+.DS_STORE
+.netbeans
+nbproject
+.idea
+.node_history
+.vscode
+
+temp
