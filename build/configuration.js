@@ -25,19 +25,19 @@ function set(newConfiguration) {
     var newOptions = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
     if (configuration && setOptions.freeze !== false) {
-        throw new Error('react-configuration - Configuration is already set, the initial call should have \'freeze\' set to false to allow for this behaviour (e.g. in testing');
+        throw new Error('react-global-configuration - Configuration is already set, the initial call should have \'freeze\' set to false to allow for this behaviour (e.g. in testing');
     }
 
     if (newOptions) {
         for (var newOption in newOptions) {
             //Check if is a valid option
             if (!validOptions.indexOf(newOptions)) {
-                throw new Error('react-configuration - Unrecognised option \'' + newOption + '\' passed to set');
+                throw new Error('react-global-configuration - Unrecognised option \'' + newOption + '\' passed to set');
             } else {
                 //Check value of option
                 var value = newOptions[newOption];
                 if (typeof value !== 'boolean') {
-                    throw new Error('react-configuration - Unexpected value type for ' + newOption + ' : ' + typeof value + ', boolean expected');
+                    throw new Error('react-global-configuration - Unexpected value type for ' + newOption + ' : ' + typeof value + ', boolean expected');
                 }
 
                 if (persisentOptions.indexOf(newOption) !== -1) {
@@ -56,20 +56,20 @@ function set(newConfiguration) {
     if (setOptions.freeze !== false && Object.freeze && Object.getOwnPropertyNames) {
         configuration = (0, _deepFreeze2['default'])(configuration);
     } else if (!Object.freeze || !Object.getOwnPropertyNames) {
-        sayWarning('react-configuration - Could not call freeze as native functions arent\'t available');
+        sayWarning('react-global-configuration - Could not call freeze as native functions arent\'t available');
     }
 }
 
 function get(key) {
     if (!configuration) {
-        sayWarning('react-configuration - Configuration has not been set.');
+        sayWarning('react-global-configuration - Configuration has not been set.');
     }
 
     if (key) {
         if (configuration[key]) {
             return configuration[key];
         } else {
-            sayWarning('react-configuration - There is no value with the key: ' + key);
+            sayWarning('react-global-configuration - There is no value with the key: ' + key);
         }
     }
 

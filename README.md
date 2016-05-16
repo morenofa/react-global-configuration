@@ -1,5 +1,7 @@
 # React global configuration
 
+[![Build Status](https://travis-ci.org/morenofa/react-global-configuration.svg?branch=master)](https://travis-ci.org/morenofa/react-global-configuration)
+
 ## Purpose
 
 Provide what is essentially an explicitly set of frozen global variables which can then be required by any module that needs them.
@@ -66,12 +68,12 @@ new MyApplication();
 __client.js__ (initiation of client side js, assume compiled via browserify / webpack / similar)
 ````js
 import React from 'react';
-import App from './app';
 import config from 'react-global-configuration';
+import App from './app';
 
 
 (function clientJS() {
-    config(window.__INITIAL_CONFIG__);
+    config.set(window.__INITIAL_CONFIG__);
     React.render(<App/>, document);
 }());
 ````
@@ -81,12 +83,13 @@ import config from 'react-global-configuration';
 __component.js__ (somewhere inside the client side app)
 ````js
 import React from 'react';
-import configuration from 'react-global-configuration';
+import config from 'react-global-configuration';
+
 
 const Component = React.createClass({
     render: function render() {
         return (
-            <div>{ configuration.get('foo') }</div>
+            <div>{ config.get('foo') }</div>
         );
     }
 });
@@ -101,6 +104,7 @@ __gulp/test.js__
 import gulp from 'gulp';
 import mocha from 'gulp-mocha';
 import config from 'react-global-configuration';
+
 
 config.set({ foo: 'baz' }, { freeze: false });
 
@@ -117,6 +121,7 @@ __appLogic.test.js__
 ````js
 import clear from 'react-global-configuration/clear';
 import assert from 'assert';
+
 
 describe('appLogic', () => {
     it('should return foo from configuration', () => {
