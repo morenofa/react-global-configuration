@@ -54,8 +54,6 @@ This is a testing utility that removes the existing configuration from the requi
 __server.js (initiation of server side process)__
 ```es6
 import config from 'react-global-configuration';
-
-
 import MyApplication from './app';
 
 config.set({ foo: 'bar' });
@@ -71,7 +69,6 @@ import React from 'react';
 import config from 'react-global-configuration';
 import App from './app';
 
-
 (function clientJS() {
     config.set(window.__INITIAL_CONFIG__);
     React.render(<App/>, document);
@@ -84,7 +81,6 @@ __component.js__ (somewhere inside the client side app)
 ````js
 import React from 'react';
 import config from 'react-global-configuration';
-
 
 const Component = React.createClass({
     render: function render() {
@@ -105,7 +101,6 @@ import gulp from 'gulp';
 import mocha from 'gulp-mocha';
 import config from 'react-global-configuration';
 
-
 config.set({ foo: 'baz' }, { freeze: false });
 
 gulp.task('test', function gulpTest() {
@@ -121,7 +116,6 @@ __appLogic.test.js__
 ````js
 import clear from 'react-global-configuration/clear';
 import assert from 'assert';
-
 
 describe('appLogic', () => {
     it('should return foo from configuration', () => {
