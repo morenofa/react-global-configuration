@@ -21,6 +21,7 @@ __set( configuration [, options] )__
 
 ```es6
 import config from 'react-global-configuration';
+
 config.set({ foo: 'bar' });
 ```
 
@@ -33,6 +34,7 @@ __get( [key] )__
 
 ```es6
 import config from 'react-global-configuration';
+
 config.get('foo');
 ```
 
@@ -42,6 +44,7 @@ __clear()__
 
 ```es6
 import config from 'react-global-configuration';
+
 config.clear();
 ```
 
@@ -82,8 +85,8 @@ __component.js__ (somewhere inside the client side app)
 import React from 'react';
 import config from 'react-global-configuration';
 
-const Component = React.createClass({
-    render: function render() {
+class Component extends React.Component {
+    render() {
         return (
             <div>{ config.get('foo') }</div>
         );
@@ -135,6 +138,10 @@ describe('appLogic', () => {
     });
 });
 ````
+
+## Thanks
+
+React global configuration was initially inspired by global-configuration. Many thanks to Josh-a-e.
 
 ## License
 
