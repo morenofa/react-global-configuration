@@ -66,7 +66,7 @@ function get(key) {
     }
 
     if (key) {
-        if (configuration[key]) {
+        if (configuration && configuration[key]) {
             return configuration[key];
         } else {
             sayWarning('react-global-configuration - There is no value with the key: ' + key);

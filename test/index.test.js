@@ -7,9 +7,9 @@ chai.should();
 
 const expect = chai.expect;
 const pathToReactGlobalConfiguration = argv.lib ? '../lib' : '../build';
-const pathToReactGlobalConfigurationClear = path.join(pathToReactGlobalConfiguration, 'clear');
+const pathToReactGlobalConfigurationReset = path.join(pathToReactGlobalConfiguration, 'reset');
 
-const clear = require(pathToReactGlobalConfigurationClear);
+const reset = require(pathToReactGlobalConfigurationReset);
 
 describe('react-global-configuration', () => {
     it('should not throw an error when set is called called prior', () => {
@@ -67,6 +67,6 @@ describe('react-global-configuration', () => {
         config.get().should.deep.equal({ foo: 'bar', 'baz': 'qux' });
     });
     afterEach(() => {
-        clear();
+        reset();
     });
 });

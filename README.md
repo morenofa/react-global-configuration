@@ -40,12 +40,12 @@ config.get('foo');
 
 - __key__ key to the setting you want to recover. If you do not put this key you recover all settings
 
-__clear()__
+__reset()__
 
 ```es6
-import config from 'react-global-configuration';
+import reset from 'react-global-configuration/reset';
 
-config.clear();
+reset();
 ```
 
 This is a testing utility that removes the existing configuration from the require cache. By calling this, calling `config.set(configuration)` and then re-requiring any target file, that target file will then be returned from require with the new `configuration` applied.
@@ -117,7 +117,7 @@ gulp.task('test', function gulpTest() {
 
 __appLogic.test.js__
 ````js
-import clear from 'react-global-configuration/clear';
+import reset from 'react-global-configuration/reset';
 import assert from 'assert';
 
 describe('appLogic', () => {
@@ -134,7 +134,7 @@ describe('appLogic', () => {
     });
 
     afterEach(() => {
-        clear();
+        reset();
     });
 });
 ````
