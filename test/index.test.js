@@ -66,6 +66,30 @@ describe('react-global-configuration', () => {
         config.set({ baz: 'qux' }, { assign: true });
         config.get().should.deep.equal({ foo: 'bar', 'baz': 'qux' });
     });
+    it('should return the string values', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = { foo: 'bar' };
+        config.set(configuration);
+
+        const key = 'foo';
+
+        config.get(key).should.equal(configuration[key]);
+    });
+    it('should return the integer values', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            'num_0': 0,
+            num_1: 1,
+            num_2: 2
+        };
+        config.set(configuration);
+
+        config.get('num_0').should.equal(0);
+        config.get('num_1').should.equal(1);
+        config.get('num_2').should.equal(2);
+    });
     afterEach(() => {
         reset();
     });

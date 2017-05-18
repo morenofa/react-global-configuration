@@ -60,20 +60,24 @@ function set(newConfiguration) {
     }
 }
 
-function get(key) {
+function get(key, fallbackValue) {
     if (!configuration) {
         sayWarning('react-global-configuration - Configuration has not been set.');
     }
 
-    if (key) {
-        if (configuration && configuration[key]) {
-            return configuration[key];
-        } else {
-            sayWarning('react-global-configuration - There is no value with the key: ' + key);
-        }
+    if (!fallbackValue) {
+        fallbackValue = null;
     }
 
-    return configuration;
+    var value = configuration[key] ? configuration[key] : null;
+
+    if (!value) {
+        sayWarning('react-global-configuration - There is no value with the key: ' + key);
+
+        value = configuration;
+    }
+
+    return value;
 }
 
 /* **************************** */
