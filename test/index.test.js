@@ -80,15 +80,26 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
-            'num_0': 0,
-            num_1: 1,
-            num_2: 2
+            foo: 0
         };
         config.set(configuration);
 
-        config.get('num_0').should.equal(0);
-        config.get('num_1').should.equal(1);
-        config.get('num_2').should.equal(2);
+        const key = 'foo';
+
+        config.get(key).should.equal(configuration[key]);
+    });
+    it('should return the boolean values', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            foo: false,
+            bar: true
+        };
+        config.set(configuration);
+
+        const key = 'foo';
+
+        config.get(key).should.equal(configuration[key]);
     });
     afterEach(() => {
         reset();

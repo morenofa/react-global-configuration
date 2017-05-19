@@ -69,9 +69,9 @@ function get(key, fallbackValue) {
         fallbackValue = null;
     }
 
-    var value = configuration[key] ? configuration[key] : null;
+    var value = configuration[key] !== undefined ? configuration[key] : fallbackValue;
 
-    if (!value) {
+    if (value === fallbackValue) {
         sayWarning('react-global-configuration - There is no value with the key: ' + key);
 
         value = configuration;
@@ -82,7 +82,7 @@ function get(key, fallbackValue) {
 
 /* **************************** */
 /* Functions
- /* **************************** */
+/* **************************** */
 
 function sayWarning(text) {
     if (process.env.NODE_ENV === 'development') {
