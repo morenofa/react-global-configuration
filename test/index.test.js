@@ -5,6 +5,13 @@ import { argv } from 'yargs';
 
 chai.should();
 
+Object.defineProperty(global, "should", {
+    value: chai.Should(),
+    enumerable: true,
+    configurable: true,
+    writable: true
+});
+
 const expect = chai.expect;
 const pathToReactGlobalConfiguration = argv.lib ? '../lib' : '../build';
 const pathToReactGlobalConfigurationReset = path.join(pathToReactGlobalConfiguration, 'reset');
@@ -80,13 +87,17 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
-            foo: 0
+            num: -1,
+            num_0: 0,
+            num_1: 1,
+            num_2: 2
         };
         config.set(configuration);
 
-        const key = 'foo';
-
-        config.get(key).should.equal(configuration[key]);
+        config.get('num').should.equal(-1);
+        config.get('num_0').should.equal(0);
+        config.get('num_1').should.equal(1);
+        config.get('num_2').should.equal(2);
     });
     it('should return the boolean values', () => {
         const config = require(pathToReactGlobalConfiguration);
@@ -97,9 +108,36 @@ describe('react-global-configuration', () => {
         };
         config.set(configuration);
 
+        config.get('foo').should.equal(false);
+        config.get('bar').should.equal(true);
+    });
+    it('should return null values', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            foo: null
+        };
+        config.set(configuration);
+
         const key = 'foo';
 
-        config.get(key).should.equal(configuration[key]);
+        should.equal(config.get(key), null);
+    });
+    it('should return fallback value if config don\'t exist', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            foo: 'bar'
+        };
+        config.set(configuration);
+
+        config.get('bar', '').should.equal('');
+        config.get('bar', true).should.equal(true);
+        config.get('bar', false).should.equal(false);
+        config.get('bar', -1).should.equal(-1);
+        config.get('bar', 0).should.equal(0);
+        config.get('bar', 1).should.equal(1);
+        should.equal(config.get('bar', null), null);
     });
     afterEach(() => {
         reset();

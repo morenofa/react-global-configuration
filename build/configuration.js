@@ -19,7 +19,7 @@ var _deepFreeze2 = _interopRequireDefault(_deepFreeze);
 var configuration = null;
 var setOptions = {};
 var validOptions = ['freeze', 'assign'];
-var persisentOptions = ['freeze'];
+var persistentOptions = ['freeze'];
 
 function set(newConfiguration) {
     var newOptions = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
@@ -40,7 +40,7 @@ function set(newConfiguration) {
                     throw new Error('react-global-configuration - Unexpected value type for ' + newOption + ' : ' + typeof value + ', boolean expected');
                 }
 
-                if (persisentOptions.indexOf(newOption) !== -1) {
+                if (persistentOptions.indexOf(newOption) !== -1) {
                     setOptions[newOption] = value;
                 }
             }
@@ -65,13 +65,20 @@ function get(key, fallbackValue) {
         sayWarning('react-global-configuration - Configuration has not been set.');
     }
 
-    if (!fallbackValue) {
+    if (fallbackValue === undefined) {
         fallbackValue = null;
     }
 
-    var value = configuration[key] !== undefined ? configuration[key] : fallbackValue;
+    var value = configuration[key];
 
-    if (value === fallbackValue) {
+    //Fix to return null values
+    if (value !== undefined) {
+        return value;
+    }
+
+    if (key !== undefined) {
+        value = fallbackValue;
+    } else {
         sayWarning('react-global-configuration - There is no value with the key: ' + key);
 
         value = configuration;
