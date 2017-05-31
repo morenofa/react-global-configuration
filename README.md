@@ -26,11 +26,11 @@ config.set({ foo: 'bar' });
 ```
 
 - __configuration__ whatever you want to be made available when subsequently importing / requiring get function `react-global-configuration`.
-- __options__ object optionally containing the following
+- __options__ object optionally containing the following:
     - __options.freeze__ _default: true_ - used to prevent the [freezing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) of the configuration object.
     - __options.assign__ _default: false_ - causes the passed configuration object to have its properties [assigned](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) to the existing configuration, rather than replacing it.
 
-__get( [key] )__
+__get( [key], [default] )__
 
 ```es6
 import config from 'react-global-configuration';
@@ -38,7 +38,9 @@ import config from 'react-global-configuration';
 config.get('foo');
 ```
 
-- __key__ key to the setting you want to recover. If you do not put this key you recover all settings
+- __key__ key to the setting you want to recover. If you do not put this key you recover all settings.
+- __default__ default value if not exists the setting with the specified key. If you do not put this parameter you get `null` value by default.
+
 
 __reset()__
 
@@ -54,7 +56,7 @@ This is a testing utility that removes the existing configuration from the requi
 
 ### Server Side
 
-__server.js (initiation of server side process)__
+__server.js__ (initiation of server side process)
 ```es6
 import config from 'react-global-configuration';
 import MyApplication from './app';
