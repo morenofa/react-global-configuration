@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', {
 });
 exports.set = set;
 exports.get = get;
+exports.serialize = serialize;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -15,6 +16,10 @@ var _objectAssign2 = _interopRequireDefault(_objectAssign);
 var _deepFreeze = require('deep-freeze');
 
 var _deepFreeze2 = _interopRequireDefault(_deepFreeze);
+
+var _serializeJavascript = require('serialize-javascript');
+
+var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
 var configuration = null;
 var setOptions = {};
@@ -87,8 +92,12 @@ function get(key, fallbackValue) {
     return value;
 }
 
+function serialize() {
+    return (0, _serializeJavascript2['default'])(configuration);
+}
+
 /* **************************** */
-/* Functions
+/* Helpers
 /* **************************** */
 
 function sayWarning(text) {
