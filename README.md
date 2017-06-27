@@ -84,22 +84,14 @@ new App();
 
 __render.js__ (render of server side process)
 ````js
-import React from 'react';
 import config from 'react-global-configuration';
 
-class Layout extends React.Component {
-    render() {
-        return (
-            ...
-            <script>
-                window.__INITIAL_CONFIG__ = { config.serialize() };
-            </script>
-            ...
-        );
-    }
-});
-
-export default Layout;
+export renderScripts = () => {}
+    `
+        <script>
+            window.__INITIAL_CONFIG__ = ${config.serialize()};
+        </script>
+    `;
 ````
 
 ### Client Side
