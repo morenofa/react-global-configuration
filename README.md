@@ -86,7 +86,7 @@ __render.js__ (render of server side process)
 ````js
 import config from 'react-global-configuration';
 
-export renderScripts = () => {}
+export renderScripts = () => 
     `
         <script>
             window.__INITIAL_CONFIG__ = ${config.serialize()};
