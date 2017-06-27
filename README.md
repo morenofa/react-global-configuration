@@ -64,7 +64,7 @@ This is a testing utility that removes the existing configuration from the requi
 
 __config.js__ (global configuration file)
 ````js
-const config = { 
+const config = {
     foo: 'bar' 
 };
 
@@ -121,7 +121,7 @@ class Component extends React.Component {
             <div>{ config.get('foo') }</div>
         );
     }
-});
+};
 
 export default Component;
 ````
