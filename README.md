@@ -38,6 +38,9 @@ import config from 'react-global-configuration';
 config.get('foo');
 ````
 
+- __key__ key to the setting you want to recover. If you do not put this key you recover all settings.
+- __default__ default value if not exists the setting with the specified key. If you do not put this parameter you get `null` value by default.
+
 __serialize()__
 
 ````js
