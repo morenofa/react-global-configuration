@@ -1,6 +1,6 @@
 {
   "name": "react-global-configuration",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "For setting a global config object managed as a requirement",
   "main": "build/index.js",
   "scripts": {
