@@ -5,7 +5,6 @@
         "blockBindings": true,
         "templateStrings": true,
         "arrowFunctions": true,
-        "templateStrings": true,
         "classes": true
     },
     "env": {
