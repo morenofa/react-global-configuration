@@ -8,6 +8,7 @@ var _configuration = require('./configuration');
 
 exports['default'] = {
 	get: _configuration.get,
-	set: _configuration.set
+	set: _configuration.set,
+	serialize: _configuration.serialize
 };
 module.exports = exports['default'];

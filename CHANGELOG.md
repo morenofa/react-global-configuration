@@ -1,5 +1,12 @@
 # Change Log
 
+## [v1.2.0](https://github.com/morenofa/react-global-configuration/tree/v1.2.0) (2017-07-04)
+[Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.1.1...v1.2.0)
+
+**Implemented enhancements:**
+
+- Added serialize function to pass data easily configuration to client side.
+
 ## [v1.1.0](https://github.com/morenofa/react-global-configuration/tree/v1.1.0) (2017-05-31)
 [Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.0.1...v1.1.0)
 

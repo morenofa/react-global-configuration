@@ -19,11 +19,11 @@ $ npm install react-global-configuration
 
 __set( configuration [, options] )__
 
-```es6
+````js
 import config from 'react-global-configuration';
 
 config.set({ foo: 'bar' });
-```
+````
 
 - __configuration__ whatever you want to be made available when subsequently importing / requiring get function `react-global-configuration`.
 - __options__ object optionally containing the following:
@@ -32,23 +32,32 @@ config.set({ foo: 'bar' });
 
 __get( [key], [default] )__
 
-```es6
+````js
 import config from 'react-global-configuration';
 
 config.get('foo');
-```
+````
 
 - __key__ key to the setting you want to recover. If you do not put this key you recover all settings.
 - __default__ default value if not exists the setting with the specified key. If you do not put this parameter you get `null` value by default.
 
+__serialize()__
+
+````js
+import config from 'react-global-configuration';
+
+config.serialize();
+````
+
+Serialize configuration to a superset of JSON.
 
 __reset()__
 
-```es6
+````js
 import reset from 'react-global-configuration/reset';
 
 reset();
-```
+````
 
 This is a testing utility that removes the existing configuration from the require cache. By calling this, calling `config.set(configuration)` and then re-requiring any target file, that target file will then be returned from require with the new `configuration` applied.
 
@@ -56,15 +65,37 @@ This is a testing utility that removes the existing configuration from the requi
 
 ### Server Side
 
+__config.js__ (global configuration file)
+````js
+const config = {
+    foo: 'bar' 
+};
+
+export default config;
+````
+
 __server.js__ (initiation of server side process)
-```es6
+````js
 import config from 'react-global-configuration';
-import MyApplication from './app';
+import configuration from './config';
+import App from './app';
 
-config.set({ foo: 'bar' });
+config.set(configuration);
 
-new MyApplication();
-```
+new App();
+````
+
+__render.js__ (render of server side process)
+````js
+import config from 'react-global-configuration';
+
+export renderScripts = () => 
+    `
+        <script>
+            window.__INITIAL_CONFIG__ = ${config.serialize()};
+        </script>
+    `;
+````
 
 ### Client Side
 
@@ -93,7 +124,7 @@ class Component extends React.Component {
             <div>{ config.get('foo') }</div>
         );
     }
-});
+};
 
 export default Component;
 ````

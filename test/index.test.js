@@ -139,6 +139,16 @@ describe('react-global-configuration', () => {
         config.get('bar', 1).should.equal(1);
         should.equal(config.get('bar', null), null);
     });
+    it('should return serializes config', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            foo: 'bar'
+        };
+        config.set(configuration);
+
+        config.serialize().should.equal('{"foo":"bar"}');
+    });
     afterEach(() => {
         reset();
     });
