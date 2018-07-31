@@ -36,9 +36,7 @@ function set(newConfiguration) {
     if (newOptions) {
         for (var newOption in newOptions) {
             //Check if is a valid option
-            if (!validOptions.indexOf(newOptions)) {
-                throw new Error('react-global-configuration - Unrecognised option \'' + newOption + '\' passed to set');
-            } else {
+            if (validOptions.indexOf(newOption) !== -1) {
                 //Check value of option
                 var value = newOptions[newOption];
                 if (typeof value !== 'boolean') {
@@ -48,6 +46,8 @@ function set(newConfiguration) {
                 if (persistentOptions.indexOf(newOption) !== -1) {
                     setOptions[newOption] = value;
                 }
+            } else {
+                throw new Error('react-global-configuration - Unrecognised option \'' + newOption + '\' passed to set');
             }
         }
     }

@@ -57,7 +57,9 @@ describe('react-global-configuration', () => {
     it('should throw an error if unrecognised options are passed', () => {
         const config = require(pathToReactGlobalConfiguration);
 
-        config.set({ foo: 'bar' }, { freeeze: false });
+        expect(() => {
+            config.set({ foo: 'bar' }, { freeeze: false });
+        }).to.throw(Error);
     });
     it('should throw an error if options are passed with unexpected types', () => {
         const config = require(pathToReactGlobalConfiguration);
