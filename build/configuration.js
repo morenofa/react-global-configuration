@@ -74,7 +74,11 @@ function get(key, fallbackValue) {
         fallbackValue = null;
     }
 
-    var value = configuration[key];
+    var value = undefined;
+
+    try {
+        value = eval('configuration.' + key);
+    } catch ($e) {}
 
     //Fix to return null values
     if (value !== undefined) {

@@ -22,7 +22,11 @@ describe('react-global-configuration', () => {
     it('should not throw an error when set is called called prior', () => {
         const config = require(pathToReactGlobalConfiguration);
 
-        const configuration = { foo: 'bar' };
+        const configuration = {
+            'foo': {
+                'bar': 'baz'
+            }
+        };
         config.set(configuration);
 
         config.get().should.deep.equal(configuration);
@@ -73,7 +77,9 @@ describe('react-global-configuration', () => {
 
         config.set({ foo: 'bar' }, { freeze: false });
         config.set({ baz: 'qux' }, { assign: true });
-        config.get().should.deep.equal({ foo: 'bar', 'baz': 'qux' });
+        config.get().should.deep.equal({ foo: 'bar', baz: 'qux' });
+        config.set({ foo: { bar: 'baz' } }, { assign: true });
+        config.get().should.deep.equal({ foo: { bar: 'baz' }, baz: 'qux' });
     });
     it('should return the string values', () => {
         const config = require(pathToReactGlobalConfiguration);
@@ -125,6 +131,34 @@ describe('react-global-configuration', () => {
 
         should.equal(config.get(key), null);
     });
+    it('should return nested object', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const nestedConfiguration = {
+            bar: 'baz'
+        };
+        const configuration = {
+            foo: nestedConfiguration
+        };
+        config.set(configuration);
+
+        config.get('foo').should.deep.equal(nestedConfiguration);
+    });
+    it('should return nested object value', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            'foo': {
+                'bar': 'baz'
+            }
+        };
+        config.set(configuration);
+
+        const key = 'foo.bar';
+        const keyParts = key.split('.');
+
+        config.get(key).should.equal(configuration[keyParts[0]][keyParts[1]]);
+    });
     it('should return fallback value if config don\'t exist', () => {
         const config = require(pathToReactGlobalConfiguration);
 
@@ -133,6 +167,8 @@ describe('react-global-configuration', () => {
         };
         config.set(configuration);
 
+        should.equal(config.get('bar'), null);
+        should.equal(config.get('bar.baz'), null);
         config.get('bar', '').should.equal('');
         config.get('bar', true).should.equal(true);
         config.get('bar', false).should.equal(false);
