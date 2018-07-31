@@ -131,7 +131,7 @@ describe('react-global-configuration', () => {
 
         should.equal(config.get(key), null);
     });
-    it('should return nested object', () => {
+    it('should return object', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const nestedConfiguration = {
