@@ -22,7 +22,13 @@ __set( configuration [, options] )__
 ````js
 import config from 'react-global-configuration';
 
-config.set({ foo: 'bar' });
+config.set({ 
+    foo: 'bar',
+    bar: {
+        baz: 'qux'
+    },
+    baz: ['qux']
+});
 ````
 
 - __configuration__ whatever you want to be made available when subsequently importing / requiring get function `react-global-configuration`.
@@ -35,7 +41,11 @@ __get( [key], [default] )__
 ````js
 import config from 'react-global-configuration';
 
-config.get('foo');
+config.get('foo'); //'bar'
+config.get('bar'); //{ baz: 'qux' }
+config.get('bar.baz'); //'qux'
+config.get('baz'); //['qux']
+config.get('baz.0'); //'qux'
 ````
 
 - __key__ key to the setting you want to recover. If you do not put this key you recover all settings.
@@ -46,7 +56,7 @@ __serialize()__
 ````js
 import config from 'react-global-configuration';
 
-config.serialize();
+config.serialize(); //"{foo:'bar',bar:{baz:'qux'},baz:['qux']}"
 ````
 
 Serialize configuration to a superset of JSON.

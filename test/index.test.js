@@ -23,8 +23,8 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
-            'foo': {
-                'bar': 'baz'
+            foo: {
+                bar: 'baz'
             }
         };
         config.set(configuration);
@@ -37,7 +37,7 @@ describe('react-global-configuration', () => {
         config.set({ foo: 'bar' });
 
         expect(() => {
-            config.set({ 'foo': 'baz' });
+            config.set({ foo: 'baz' });
         }).to.throw(Error);
     });
     it('should throw an error if called more than once, even if subsequent calls have freeze set to false', () => {
@@ -46,7 +46,7 @@ describe('react-global-configuration', () => {
         config.set({ foo: 'bar' });
 
         expect(() => {
-            config.set({ 'foo': 'baz' }, { freeze: false });
+            config.set({ foo: 'baz' }, { freeze: false });
         }).to.throw(Error);
     });
     it('shouldn\'t throw an error if called more than once when the initial call had freeze set to false', () => {
@@ -148,13 +148,38 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
-            'foo': {
-                'bar': 'baz'
+            foo: {
+                bar: 'baz'
             }
         };
         config.set(configuration);
 
         const key = 'foo.bar';
+        const keyParts = key.split('.');
+
+        config.get(key).should.equal(configuration[keyParts[0]][keyParts[1]]);
+    });
+    it('should return array', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            foo: ['bar', 'baz']
+        };
+        config.set(configuration);
+
+        const key = 'foo';
+
+        config.get(key).should.equal(configuration[key]);
+    });
+    it('should return array value', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const configuration = {
+            foo: ['bar', 'baz']
+        };
+        config.set(configuration);
+
+        const key = 'foo.0';
         const keyParts = key.split('.');
 
         config.get(key).should.equal(configuration[keyParts[0]][keyParts[1]]);
@@ -168,6 +193,7 @@ describe('react-global-configuration', () => {
         config.set(configuration);
 
         should.equal(config.get('bar'), null);
+        should.equal(config.get('foo.baz'), null);
         should.equal(config.get('bar.baz'), null);
         config.get('bar', '').should.equal('');
         config.get('bar', true).should.equal(true);
@@ -181,11 +207,14 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
-            foo: 'bar'
+            foo: 'bar',
+            bar: {
+                baz: 'qux'
+            }
         };
         config.set(configuration);
 
-        config.serialize().should.equal('{"foo":"bar"}');
+        config.serialize().should.equal('{"foo":"bar","bar":{"baz":"qux"}}');
     });
     afterEach(() => {
         reset();

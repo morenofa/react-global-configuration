@@ -74,11 +74,7 @@ function get(key, fallbackValue) {
         fallbackValue = null;
     }
 
-    var value = undefined;
-
-    try {
-        value = eval('configuration.' + key);
-    } catch ($e) {}
+    var value = fetchFromObject(configuration, key);
 
     //Fix to return null values
     if (value !== undefined) {
@@ -103,6 +99,34 @@ function serialize() {
 /* **************************** */
 /* Helpers
 /* **************************** */
+
+function fetchFromObject(_x2, _x3) {
+    var _again = true;
+
+    _function: while (_again) {
+        var obj = _x2,
+            key = _x3;
+        _again = false;
+
+        key = key !== undefined ? key : '';
+
+        if (typeof obj === 'undefined') {
+            return undefined;
+        }
+
+        var index = key.indexOf('.');
+
+        if (index > -1) {
+            _x2 = obj[key.substring(0, index)];
+            _x3 = key.substr(index + 1);
+            _again = true;
+            index = undefined;
+            continue _function;
+        }
+
+        return obj[key];
+    }
+}
 
 function sayWarning(text) {
     if (process.env.NODE_ENV === 'development') {
