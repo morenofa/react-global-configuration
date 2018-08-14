@@ -1,5 +1,20 @@
 # Change Log
 
+## [v1.3.0](https://github.com/morenofa/react-global-configuration/tree/v1.3.0) (2018-08-14)
+[Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.2.1...v1.3.0)
+
+**Implemented enhancements:**
+
+- Added functionality to get objects/arrays.
+- Added functionality to get nested object/array value.
+
+## [v1.2.1](https://github.com/morenofa/react-global-configuration/tree/v1.2.1) (2018-01-22)
+[Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.2.0...v1.2.1)
+
+**Implemented enhancements:**
+
+- Update Travis-CI
+
 ## [v1.2.0](https://github.com/morenofa/react-global-configuration/tree/v1.2.0) (2017-07-04)
 [Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.1.1...v1.2.0)
 
