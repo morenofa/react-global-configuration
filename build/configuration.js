@@ -26,6 +26,8 @@ var configuration = null;
 var setOptions = {};
 var currentEnvironment = null;
 var validOptions = ['freeze', 'assign', 'environment'];
+var booleanOptions = ['freeze', 'assign'];
+var stringOptions = ['environment'];
 var persistentOptions = ['freeze'];
 
 function set(newConfiguration) {
@@ -47,7 +49,12 @@ function set(newConfiguration) {
             if (validOptions.indexOf(option) !== -1) {
                 //Check value of option
                 var value = options[option];
-                if (typeof value !== 'boolean') {
+
+                if (stringOptions.indexOf(option) !== -1 && typeof value !== 'string') {
+                    throw new Error('react-global-configuration - Unexpected value type for ' + option + ' : ' + typeof value + ', string expected');
+                }
+
+                if (booleanOptions.indexOf(option) !== -1 && typeof value !== 'boolean') {
                     throw new Error('react-global-configuration - Unexpected value type for ' + option + ' : ' + typeof value + ', boolean expected');
                 }
 
@@ -114,8 +121,8 @@ function serialize(env) {
     return (0, _serializeJavascript2['default'])(configuration[env]);
 }
 
-function setEnvironment(environment) {
-    return currentEnvironment = environment;
+function setEnvironment(env) {
+    return currentEnvironment = env;
 }
 
 /* **************************** */

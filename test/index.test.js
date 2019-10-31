@@ -187,10 +187,10 @@ describe('react-global-configuration', () => {
     it('should return fallback value if config don\'t exist', () => {
         const config = require(pathToReactGlobalConfiguration);
 
-        const configuration = {
-            foo: 'bar'
-        };
-        config.set(configuration);
+        config.set({ foo: 'baz' }, { freeze: false, environment: 'production' });
+        config.set({ foo: 'bar' });
+
+        config.setEnvironment('production');
 
         should.equal(config.get('bar'), null);
         should.equal(config.get('foo.baz'), null);
@@ -215,6 +215,55 @@ describe('react-global-configuration', () => {
         config.set(configuration);
 
         config.serialize().should.equal('{"foo":"bar","bar":{"baz":"qux"}}');
+    });
+    it('should return environment value', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        const prodConfiguration = {
+            foo: 'bar'
+        };
+        config.set(prodConfiguration, { freeze: false, environment: 'production' });
+
+        const testConfiguration = {
+            foo: 'baz'
+        };
+        config.set(testConfiguration, { freeze: false, environment: 'test' });
+
+        const configuration = {
+            foo: 'qux'
+        };
+        config.set(configuration);
+
+        const key = 'foo';
+
+        config.get(key).should.equal(configuration[key]);
+
+        config.setEnvironment('production');
+
+        config.get(key).should.equal(prodConfiguration[key]);
+
+        config.setEnvironment('test');
+
+        config.get(key).should.equal(testConfiguration[key]);
+
+        config.setEnvironment(null);
+
+        config.get(key).should.equal(configuration[key]);
+    });
+    it('shouldn\'t return environment value', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        config.set({ foo: 'baz' }, { freeze: false, environment: 'production' });
+        const configuration = {
+            foo: 'bar'
+        };
+        config.set(configuration);
+
+        config.setEnvironment('test');
+
+        const key = 'foo';
+
+        config.get(key).should.equal(configuration[key]);
     });
     afterEach(() => {
         reset();
