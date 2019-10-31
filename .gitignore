@@ -1,5 +1,6 @@
 # Optional npm cache directory
 .npm
+package-lock.json
 
 # Coverage directory used by tools like istanbul
 coverage

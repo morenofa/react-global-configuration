@@ -6,6 +6,7 @@ Object.defineProperty(exports, '__esModule', {
 exports.set = set;
 exports.get = get;
 exports.serialize = serialize;
+exports.setEnvironment = setEnvironment;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -23,39 +24,48 @@ var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
 
 var configuration = null;
 var setOptions = {};
-var validOptions = ['freeze', 'assign'];
+var currentEnvironment = null;
+var validOptions = ['freeze', 'assign', 'environment'];
 var persistentOptions = ['freeze'];
 
 function set(newConfiguration) {
-    var newOptions = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 
     if (configuration && setOptions.freeze !== false) {
         throw new Error('react-global-configuration - Configuration is already set, the initial call should have \'freeze\' set to false to allow for this behaviour (e.g. in testing');
     }
 
-    if (newOptions) {
-        for (var newOption in newOptions) {
+    if (configuration == null) {
+        configuration = {
+            'default': {}
+        };
+    }
+
+    if (options) {
+        for (var option in options) {
             //Check if is a valid option
-            if (validOptions.indexOf(newOption) !== -1) {
+            if (validOptions.indexOf(option) !== -1) {
                 //Check value of option
-                var value = newOptions[newOption];
+                var value = options[option];
                 if (typeof value !== 'boolean') {
-                    throw new Error('react-global-configuration - Unexpected value type for ' + newOption + ' : ' + typeof value + ', boolean expected');
+                    throw new Error('react-global-configuration - Unexpected value type for ' + option + ' : ' + typeof value + ', boolean expected');
                 }
 
-                if (persistentOptions.indexOf(newOption) !== -1) {
-                    setOptions[newOption] = value;
+                if (persistentOptions.indexOf(option) !== -1) {
+                    setOptions[option] = value;
                 }
             } else {
-                throw new Error('react-global-configuration - Unrecognised option \'' + newOption + '\' passed to set');
+                throw new Error('react-global-configuration - Unrecognised option \'' + option + '\' passed to set');
             }
         }
     }
 
-    if (newOptions.assign) {
-        configuration = (0, _objectAssign2['default'])(configuration, newConfiguration);
+    var env = options.environment !== undefined ? options.environment : 'default';
+
+    if (options.assign) {
+        configuration[env] = (0, _objectAssign2['default'])(configuration[env], newConfiguration);
     } else {
-        configuration = newConfiguration;
+        configuration[env] = newConfiguration;
     }
 
     if (setOptions.freeze !== false && Object.freeze && Object.getOwnPropertyNames) {
@@ -74,7 +84,13 @@ function get(key, fallbackValue) {
         fallbackValue = null;
     }
 
-    var value = fetchFromObject(configuration, key);
+    var value = fetchFromObject(configuration['default'], key);
+
+    if (currentEnvironment) {
+        var envValue = fetchFromObject(configuration[currentEnvironment], key);
+
+        value = envValue !== undefined ? envValue : value;
+    }
 
     //Fix to return null values
     if (value !== undefined) {
@@ -86,14 +102,20 @@ function get(key, fallbackValue) {
     } else {
         sayWarning('react-global-configuration - There is no value with the key: ' + key);
 
-        value = configuration;
+        value = configuration['default'];
     }
 
     return value;
 }
 
-function serialize() {
-    return (0, _serializeJavascript2['default'])(configuration);
+function serialize(env) {
+    env = env !== undefined ? env : 'default';
+
+    return (0, _serializeJavascript2['default'])(configuration[env]);
+}
+
+function setEnvironment(environment) {
+    return currentEnvironment = environment;
 }
 
 /* **************************** */
