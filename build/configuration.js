@@ -38,9 +38,7 @@ function set(newConfiguration) {
     }
 
     if (configuration == null) {
-        configuration = {
-            'default': {}
-        };
+        configuration = {};
     }
 
     if (options) {
@@ -67,10 +65,10 @@ function set(newConfiguration) {
         }
     }
 
-    var env = options.environment !== undefined ? options.environment : 'default';
+    var env = options.environment !== undefined ? options.environment : 'global';
 
     if (options.assign) {
-        configuration[env] = (0, _objectAssign2['default'])(configuration[env], newConfiguration);
+        configuration[env] = (0, _objectAssign2['default'])(getEnvironmentConfiguration(env), newConfiguration);
     } else {
         configuration[env] = newConfiguration;
     }
@@ -82,19 +80,18 @@ function set(newConfiguration) {
     }
 }
 
-function get(key, fallbackValue) {
+function get(key) {
+    var fallbackValue = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+
     if (!configuration) {
         sayWarning('react-global-configuration - Configuration has not been set.');
     }
 
-    if (fallbackValue === undefined) {
-        fallbackValue = null;
-    }
-
-    var value = fetchFromObject(configuration['default'], key);
+    var value = fetchFromObject(getEnvironmentConfiguration(), key);
 
     if (currentEnvironment) {
-        var envValue = fetchFromObject(configuration[currentEnvironment], key);
+        var config = getEnvironmentConfiguration(currentEnvironment);
+        var envValue = fetchFromObject(config !== null ? config : {}, key);
 
         value = envValue !== undefined ? envValue : value;
     }
@@ -109,16 +106,16 @@ function get(key, fallbackValue) {
     } else {
         sayWarning('react-global-configuration - There is no value with the key: ' + key);
 
-        value = configuration['default'];
+        value = getEnvironmentConfiguration();
     }
 
     return value;
 }
 
 function serialize(env) {
-    env = env !== undefined ? env : 'default';
+    var configuration = getEnvironmentConfiguration(env);
 
-    return (0, _serializeJavascript2['default'])(configuration[env]);
+    return (0, _serializeJavascript2['default'])(configuration);
 }
 
 function setEnvironment(env) {
@@ -129,12 +126,18 @@ function setEnvironment(env) {
 /* Helpers
 /* **************************** */
 
-function fetchFromObject(_x2, _x3) {
+function getEnvironmentConfiguration(env) {
+    env = env !== undefined ? env : 'global';
+
+    return configuration && configuration[env] !== undefined ? configuration[env] : null;
+}
+
+function fetchFromObject(_x3, _x4) {
     var _again = true;
 
     _function: while (_again) {
-        var obj = _x2,
-            key = _x3;
+        var obj = _x3,
+            key = _x4;
         _again = false;
 
         key = key !== undefined ? key : '';
@@ -146,8 +149,8 @@ function fetchFromObject(_x2, _x3) {
         var index = key.indexOf('.');
 
         if (index > -1) {
-            _x2 = obj[key.substring(0, index)];
-            _x3 = key.substr(index + 1);
+            _x3 = obj[key.substring(0, index)];
+            _x4 = key.substr(index + 1);
             _again = true;
             index = undefined;
             continue _function;

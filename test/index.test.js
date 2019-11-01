@@ -203,7 +203,7 @@ describe('react-global-configuration', () => {
         config.get('bar', 1).should.equal(1);
         should.equal(config.get('bar', null), null);
     });
-    it('should return serializes config', () => {
+    it('should return serialized config', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
@@ -250,7 +250,7 @@ describe('react-global-configuration', () => {
 
         config.get(key).should.equal(configuration[key]);
     });
-    it('shouldn\'t return environment value', () => {
+    it('should return global value instead environment value', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         config.set({ foo: 'baz' }, { freeze: false, environment: 'production' });
@@ -263,7 +263,7 @@ describe('react-global-configuration', () => {
 
         const key = 'foo';
 
-        config.get(key).should.equal(configuration[key]);
+        should.equal(config.get(key), configuration[key]);
     });
     afterEach(() => {
         reset();
