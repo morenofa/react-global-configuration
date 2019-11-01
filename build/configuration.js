@@ -67,7 +67,7 @@ function set(newConfiguration) {
 
 function get(key, fallbackValue) {
     if (!configuration) {
-        sayWarning('react-global-configuration - Configuration has not been set.');
+        throw new Error('react-global-configuration - Configuration has not been set.');
     }
 
     if (fallbackValue === undefined) {

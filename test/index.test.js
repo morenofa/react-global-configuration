@@ -203,7 +203,15 @@ describe('react-global-configuration', () => {
         config.get('bar', 1).should.equal(1);
         should.equal(config.get('bar', null), null);
     });
-    it('should return serializes config', () => {
+    it('should throw an error when get configuration is undefined', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        expect(() => {
+            config.get();
+            config.get('foo');
+        }).to.throw(Error);
+    });
+    it('should return serialized config', () => {
         const config = require(pathToReactGlobalConfiguration);
 
         const configuration = {
@@ -215,6 +223,18 @@ describe('react-global-configuration', () => {
         config.set(configuration);
 
         config.serialize().should.equal('{"foo":"bar","bar":{"baz":"qux"}}');
+    });
+    it('shouldn\'t throw an error when tries to serialize undefined configuration', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        expect(() => {
+            config.serialize();
+        }).not.to.throw(Error);
+    });
+    it('should return null when serializes undefined configuration', () => {
+        const config = require(pathToReactGlobalConfiguration);
+
+        config.serialize().should.equal('null');
     });
     afterEach(() => {
         reset();
