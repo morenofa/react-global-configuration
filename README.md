@@ -17,24 +17,42 @@ $ npm install react-global-configuration
 
 ## API
 
-__set( configuration [, options] )__
+__set( configuration, [options] )__
 
 ````js
 import config from 'react-global-configuration';
 
+config.set({ qux: 'corge', garply: 'fred' }, { freeze: false, environment: 'test' });
+config.set({ qux: 'grault' }, { freeze: false, environment: 'production' });
 config.set({ 
     foo: 'bar',
     bar: {
         baz: 'qux'
     },
-    baz: ['qux']
+    baz: ['qux'],
+    qux: 'quux',
+    garply: 'waldo'
 });
 ````
 
-- __configuration__ whatever you want to be made available when subsequently importing / requiring get function `react-global-configuration`.
-- __options__ object optionally containing the following:
+Sets a configuration
+- __configuration__ - whatever you want to be made available when subsequently importing / requiring get function `react-global-configuration`.
+- __options__ - object optionally containing the following:
     - __options.freeze__ _default: true_ - used to prevent the [freezing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) of the configuration object.
     - __options.assign__ _default: false_ - causes the passed configuration object to have its properties [assigned](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) to the existing configuration, rather than replacing it.
+    - __options.environment__ _default: 'global'_ - used to define the environment for the passed configuration.
+
+
+__setEnvironment( environment )__
+
+````js
+import config from 'react-global-configuration';
+
+config.setEnvironment('production');
+````
+
+Defines the current environment in order to obtain the appropriate configurations.
+- __environment__ - key to define the current environment of the application. This setting is used after in `get()` function to obtain the appropriate setting.
 
 __get( [key], [default] )__
 
@@ -46,20 +64,27 @@ config.get('bar'); //{ baz: 'qux' }
 config.get('bar.baz'); //'qux'
 config.get('baz'); //['qux']
 config.get('baz.0'); //'qux'
+config.get('qux'); //'grault' -> environment value
+config.get('garply'); //'waldo' -> global value
 ````
 
-- __key__ key to the setting you want to recover. If you do not put this key you recover all settings.
-- __default__ default value if not exists the setting with the specified key. If you do not put this parameter you get `null` value by default.
+Obtains a specific configuration.
+- __key__ - key to the setting you want to recover. If you do not put this key you recover all settings.
+- __default__ - default value if not exists the setting with the specified key. If you do not put this parameter you get `null` value by default.
 
-__serialize()__
+__serialize( [environment] )__
 
 ````js
 import config from 'react-global-configuration';
 
-config.serialize(); //"{foo:'bar',bar:{baz:'qux'},baz:['qux']}"
+config.serialize(); //"{foo:'bar',bar:{baz:'qux'},baz:['qux'],qux:'quux',garply:'waldo'}"
+config.serialize('test'); //"{qux:'corge',garply:'fred'}"
+config.serialize('production'); //"{qux:'grault'}"
 ````
 
 Serialize configuration to a superset of JSON.
+- __environment__ _default: 'global'_ - key to define the environment configuration you wants to serialize.
+
 
 __reset()__
 
