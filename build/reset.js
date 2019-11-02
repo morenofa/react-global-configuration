@@ -1,23 +1,19 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-    value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
-exports['default'] = reset;
+exports["default"] = reset;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _path = _interopRequireDefault(require("path"));
 
-var _path = require('path');
-
-var _path2 = _interopRequireDefault(_path);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function reset() {
-    if (require && require.cache) {
-        delete require.cache[_path2['default'].join(__dirname, 'configuration.js')];
-        delete require.cache[_path2['default'].join(__dirname, 'index.js')];
-    } else {
-        void 0;
-    }
+  if (require && require.cache) {
+    delete require.cache[_path["default"].join(__dirname, 'configuration.js')];
+    delete require.cache[_path["default"].join(__dirname, 'index.js')];
+  } else {
+    void 0;
+  }
 }
-
-module.exports = exports['default'];

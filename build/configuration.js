@@ -1,26 +1,22 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-    value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
 exports.set = set;
 exports.get = get;
 exports.serialize = serialize;
 exports.setEnvironment = setEnvironment;
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+var _objectAssign = _interopRequireDefault(require("object-assign"));
 
-var _objectAssign = require('object-assign');
+var _deepFreeze = _interopRequireDefault(require("deep-freeze"));
 
-var _objectAssign2 = _interopRequireDefault(_objectAssign);
+var _serializeJavascript = _interopRequireDefault(require("serialize-javascript"));
 
-var _deepFreeze = require('deep-freeze');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var _deepFreeze2 = _interopRequireDefault(_deepFreeze);
-
-var _serializeJavascript = require('serialize-javascript');
-
-var _serializeJavascript2 = _interopRequireDefault(_serializeJavascript);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 var configuration = null;
 var setOptions = {};
@@ -31,137 +27,122 @@ var stringOptions = ['environment'];
 var persistentOptions = ['freeze'];
 
 function set(newConfiguration) {
-    var options = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-    if (configuration && setOptions.freeze !== false) {
-        throw new Error('react-global-configuration - Configuration is already set, the initial call should have \'freeze\' set to false to allow for this behaviour (e.g. in testing');
-    }
+  if (configuration && setOptions.freeze !== false) {
+    throw new Error('react-global-configuration - Configuration is already set, the initial call should have \'freeze\' set to false to allow for this behaviour (e.g. in testing');
+  }
 
-    if (configuration == null) {
-        configuration = {};
-    }
+  if (configuration == null) {
+    configuration = {};
+  }
 
-    if (options) {
-        for (var option in options) {
-            //Check if is a valid option
-            if (validOptions.indexOf(option) !== -1) {
-                //Check value of option
-                var value = options[option];
+  if (options) {
+    for (var option in options) {
+      //Check if is a valid option
+      if (validOptions.indexOf(option) !== -1) {
+        //Check value of option
+        var value = options[option];
 
-                if (stringOptions.indexOf(option) !== -1 && typeof value !== 'string') {
-                    throw new Error('react-global-configuration - Unexpected value type for ' + option + ' : ' + typeof value + ', string expected');
-                }
-
-                if (booleanOptions.indexOf(option) !== -1 && typeof value !== 'boolean') {
-                    throw new Error('react-global-configuration - Unexpected value type for ' + option + ' : ' + typeof value + ', boolean expected');
-                }
-
-                if (persistentOptions.indexOf(option) !== -1) {
-                    setOptions[option] = value;
-                }
-            } else {
-                throw new Error('react-global-configuration - Unrecognised option \'' + option + '\' passed to set');
-            }
+        if (stringOptions.indexOf(option) !== -1 && typeof value !== 'string') {
+          throw new Error("react-global-configuration - Unexpected value type for ".concat(option, " : ").concat(_typeof(value), ", string expected"));
         }
-    }
 
-    var env = options.environment !== undefined ? options.environment : 'global';
+        if (booleanOptions.indexOf(option) !== -1 && typeof value !== 'boolean') {
+          throw new Error("react-global-configuration - Unexpected value type for ".concat(option, " : ").concat(_typeof(value), ", boolean expected"));
+        }
 
-    if (options.assign) {
-        configuration[env] = (0, _objectAssign2['default'])(getEnvironmentConfiguration(env), newConfiguration);
-    } else {
-        configuration[env] = newConfiguration;
+        if (persistentOptions.indexOf(option) !== -1) {
+          setOptions[option] = value;
+        }
+      } else {
+        throw new Error("react-global-configuration - Unrecognised option '".concat(option, "' passed to set"));
+      }
     }
+  }
 
-    if (setOptions.freeze !== false && Object.freeze && Object.getOwnPropertyNames) {
-        configuration = (0, _deepFreeze2['default'])(configuration);
-    } else if (!Object.freeze || !Object.getOwnPropertyNames) {
-        sayWarning('react-global-configuration - Could not call freeze as native functions arent\'t available');
-    }
+  var env = options.environment !== undefined ? options.environment : 'global';
+
+  if (options.assign) {
+    configuration[env] = (0, _objectAssign["default"])(getEnvironmentConfiguration(env), newConfiguration);
+  } else {
+    configuration[env] = newConfiguration;
+  }
+
+  if (setOptions.freeze !== false && Object.freeze && Object.getOwnPropertyNames) {
+    configuration = (0, _deepFreeze["default"])(configuration);
+  } else if (!Object.freeze || !Object.getOwnPropertyNames) {
+    sayWarning('react-global-configuration - Could not call freeze as native functions arent\'t available');
+  }
 }
 
 function get(key) {
-    var fallbackValue = arguments.length <= 1 || arguments[1] === undefined ? null : arguments[1];
+  var fallbackValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-    if (!configuration) {
-        sayWarning('react-global-configuration - Configuration has not been set.');
-    }
+  if (!configuration) {
+    throw new Error('react-global-configuration - Configuration has not been set.');
+  }
 
-    var value = fetchFromObject(getEnvironmentConfiguration(), key);
+  var value = fetchFromObject(getEnvironmentConfiguration(), key);
 
-    if (currentEnvironment) {
-        var config = getEnvironmentConfiguration(currentEnvironment);
-        var envValue = fetchFromObject(config !== null ? config : {}, key);
+  if (currentEnvironment) {
+    var config = getEnvironmentConfiguration(currentEnvironment);
+    var envValue = fetchFromObject(config !== null ? config : {}, key);
+    value = envValue !== undefined ? envValue : value;
+  } //Fix to return null values
 
-        value = envValue !== undefined ? envValue : value;
-    }
 
-    //Fix to return null values
-    if (value !== undefined) {
-        return value;
-    }
-
-    if (key !== undefined) {
-        value = fallbackValue;
-    } else {
-        sayWarning('react-global-configuration - There is no value with the key: ' + key);
-
-        value = getEnvironmentConfiguration();
-    }
-
+  if (value !== undefined) {
     return value;
+  }
+
+  if (key !== undefined) {
+    value = fallbackValue;
+  } else {
+    sayWarning("react-global-configuration - There is no value with the key: ".concat(key));
+    value = getEnvironmentConfiguration();
+  }
+
+  return value;
 }
 
 function serialize(env) {
-    var configuration = getEnvironmentConfiguration(env);
-
-    return (0, _serializeJavascript2['default'])(configuration);
+  var configuration = getEnvironmentConfiguration(env);
+  return (0, _serializeJavascript["default"])(configuration);
 }
 
 function setEnvironment(env) {
-    return currentEnvironment = env;
+  return currentEnvironment = env;
 }
-
 /* **************************** */
+
 /* Helpers
 /* **************************** */
 
-function getEnvironmentConfiguration(env) {
-    env = env !== undefined ? env : 'global';
 
-    return configuration && configuration[env] !== undefined ? configuration[env] : null;
+function getEnvironmentConfiguration(env) {
+  env = env !== undefined ? env : 'global';
+  return configuration && configuration[env] !== undefined ? configuration[env] : null;
 }
 
-function fetchFromObject(_x3, _x4) {
-    var _again = true;
+function fetchFromObject(obj, key) {
+  key = key !== undefined ? key : '';
 
-    _function: while (_again) {
-        var obj = _x3,
-            key = _x4;
-        _again = false;
+  if (typeof obj === 'undefined') {
+    return undefined;
+  }
 
-        key = key !== undefined ? key : '';
+  var index = key.indexOf('.');
 
-        if (typeof obj === 'undefined') {
-            return undefined;
-        }
+  if (index > -1) {
+    return fetchFromObject(obj[key.substring(0, index)], key.substr(index + 1));
+  }
 
-        var index = key.indexOf('.');
-
-        if (index > -1) {
-            _x3 = obj[key.substring(0, index)];
-            _x4 = key.substr(index + 1);
-            _again = true;
-            index = undefined;
-            continue _function;
-        }
-
-        return obj[key];
-    }
+  return obj[key];
 }
 
 function sayWarning(text) {
-    if (process.env.NODE_ENV === 'development') {
-        void 0;
-    }
+  if (process.env.NODE_ENV === 'development') {
+    void 0;
+  }
 }

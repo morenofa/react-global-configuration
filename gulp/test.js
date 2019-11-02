@@ -12,6 +12,10 @@ gulp.task('test', () => {
         gulp
             .src([ 'test/**/*.test.*' ])
             .pipe(debug({ title: 'TEST' }))
-            .pipe(mocha())
+            .pipe(mocha({
+                require: [
+                    '@babel/register'
+                ]
+            }))
     );
 });

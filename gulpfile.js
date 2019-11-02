@@ -6,7 +6,7 @@
  *
  */
 
-require('babel/register');
+require("@babel/register");
 
 require('./gulp/test');
 require('./gulp/lint');
