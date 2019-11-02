@@ -204,7 +204,14 @@ describe('react-global-configuration', () => {
         should.equal(config.get('bar', null), null);
     });
     it('should throw an error when get configuration is undefined', () => {
-        const config = require(pathToReactGlobalConfiguration);
+        const config = require(pathToReactGlobalConfiguration).default;
+
+        expect(() => {
+            config.get();
+            config.get('foo');
+        }).to.throw(Error);
+
+        config.setEnvironment('test');
 
         expect(() => {
             config.get();
@@ -235,6 +242,13 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration).default;
 
         config.serialize().should.equal('null');
+        config.serialize('test').should.equal('null');
+
+        config.set({
+            foo: 'bar'
+        });
+
+        config.serialize('test').should.equal('null');
     });
     it('should return environment value', () => {
         const config = require(pathToReactGlobalConfiguration).default;
