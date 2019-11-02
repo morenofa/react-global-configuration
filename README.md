@@ -207,10 +207,14 @@ describe('appLogic', () => {
 });
 ````
 
+## Contributions
+
+[Issues](https://github.com/morenofa/react-global-configuration/issues) and [pull requests](https://github.com/morenofa/react-global-configuration/pulls) are most welcome.
+
 ## Thanks
 
 React global configuration was initially inspired by global-configuration. Many thanks to Josh-a-e.
 
 ## License
 
-<a rel="license" href="https://opensource.org/licenses/MIT">MIT</a>
+[MIT](https://opensource.org/licenses/MIT)
