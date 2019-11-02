@@ -80,7 +80,7 @@ function get(key) {
   var fallbackValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
   if (!configuration) {
-    throw new Error('react-global-configuration - Configuration has not been set.');
+    sayWarning('react-global-configuration - Configuration has not been set.');
   }
 
   var value = fetchFromObject(getEnvironmentConfiguration(), key);
