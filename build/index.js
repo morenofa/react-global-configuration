@@ -1,14 +1,15 @@
-'use strict';
+"use strict";
 
-Object.defineProperty(exports, '__esModule', {
-	value: true
+Object.defineProperty(exports, "__esModule", {
+  value: true
 });
+exports["default"] = void 0;
 
-var _configuration = require('./configuration');
+var _configuration = require("./configuration");
 
-exports['default'] = {
-	get: _configuration.get,
-	set: _configuration.set,
-	serialize: _configuration.serialize
+var _default = {
+  get: _configuration.get,
+  set: _configuration.set,
+  serialize: _configuration.serialize
 };
-module.exports = exports['default'];
+exports["default"] = _default;
