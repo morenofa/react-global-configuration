@@ -10,4 +10,4 @@ install:
 before_script:
   - npm update -g npm
 after_success:
-  - codecov --file coverage/lcov.info --disable search
+  - codecov
