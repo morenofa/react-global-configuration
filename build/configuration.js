@@ -25,6 +25,7 @@ var validOptions = ['freeze', 'assign', 'environment'];
 var booleanOptions = ['freeze', 'assign'];
 var stringOptions = ['environment'];
 var persistentOptions = ['freeze'];
+var debugEnv = ['development', 'test'];
 
 function set(newConfiguration) {
   var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -150,7 +151,7 @@ function fetchFromObject(obj, key) {
 }
 
 function sayWarning(text) {
-  if (process.env.NODE_ENV === 'development') {
+  if (debugEnv.indexOf(process.env.NODE_ENV)) {
     void 0;
   }
 }

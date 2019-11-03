@@ -4,18 +4,8 @@
  */
 
 import gulp from 'gulp';
-import mocha from 'gulp-mocha';
-import debug from 'gulp-debug';
+import shell from "gulp-shell";
 
-gulp.task('test', () => {
-    return (
-        gulp
-            .src([ 'test/**/*.test.*' ])
-            .pipe(debug({ title: 'TEST' }))
-            .pipe(mocha({
-                require: [
-                    '@babel/register'
-                ]
-            }))
-    );
-});
+gulp.task('test', shell.task([
+    'cross-env NODE_ENV=test nyc mocha test/**/*.test.*',
+]));

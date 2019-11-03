@@ -65,11 +65,18 @@ describe('react-global-configuration', () => {
             config.set({ foo: 'bar' }, { freeeze: false });
         }).to.throw(Error);
     });
-    it('should throw an error if options are passed with unexpected types', () => {
+    it('should throw an error if options boolean are passed with unexpected types', () => {
         const config = require(pathToReactGlobalConfiguration).default;
 
         expect(() => {
             config.set({ foo: 'bar' }, { assign: 'true' });
+        }).to.throw(Error);
+    });
+    it('should throw an error if options string are passed with unexpected types', () => {
+        const config = require(pathToReactGlobalConfiguration).default;
+
+        expect(() => {
+            config.set({ foo: 'bar' }, { environment: true });
         }).to.throw(Error);
     });
     it('should extend the configuration, rather than replacing them if assign is set to true', () => {

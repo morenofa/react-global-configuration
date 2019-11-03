@@ -4,5 +4,9 @@ node_js:
   - "12"
   - "10"
   - "8"
+install:
+  - npm install -g codecov
 before_script:
-- npm update -g npm
+  - npm update -g npm
+after_success:
+  - codecov --file coverage/lcov.info --disable search

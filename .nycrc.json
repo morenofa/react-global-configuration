@@ -1,0 +1,16 @@
+{
+  "all": true,
+  "check-coverage": true,
+  "require": [
+    "@babel/register"
+  ],
+  "include": [
+    "build/**"
+  ],
+  "exclude": [],
+  "reporter": [
+    "lcov",
+    "text",
+    "html"
+  ]
+}

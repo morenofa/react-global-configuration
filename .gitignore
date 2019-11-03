@@ -19,3 +19,4 @@ nbproject
 .vscode
 
 temp
+.nyc_output/
