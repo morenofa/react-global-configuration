@@ -81,6 +81,28 @@ describe('react-global-configuration', () => {
         config.set({ foo: { bar: 'baz' } }, { assign: true });
         config.get().should.deep.equal({ foo: { bar: 'baz' }, baz: 'qux' });
     });
+    it('should throw an error when attempts to set environment without value', () => {
+        const config = require(pathToReactGlobalConfiguration).default;
+
+        expect(() => {
+            config.setEnvironment();
+        }).to.throw(Error);
+    });
+    it('should throw an error when attempts to set environment with unexpected type', () => {
+        const config = require(pathToReactGlobalConfiguration).default;
+
+        expect(() => {
+            config.setEnvironment('production');
+        }).not.to.throw(Error);
+
+        expect(() => {
+            config.setEnvironment(true);
+        }).to.throw(Error);
+
+        expect(() => {
+            config.setEnvironment({ foo: 'bar' });
+        }).to.throw(Error);
+    });
     it('should return the string values', () => {
         const config = require(pathToReactGlobalConfiguration).default;
 
@@ -221,15 +243,16 @@ describe('react-global-configuration', () => {
     it('should return serialized config', () => {
         const config = require(pathToReactGlobalConfiguration).default;
 
-        const configuration = {
+        config.set({ foo: 'baz' }, { freeze: false, environment: 'production' });
+        config.set({
             foo: 'bar',
             bar: {
                 baz: 'qux'
             }
-        };
-        config.set(configuration);
+        });
 
         config.serialize().should.equal('{"foo":"bar","bar":{"baz":"qux"}}');
+        config.serialize('production').should.equal('{"foo":"baz"}');
     });
     it('shouldn\'t throw an error when tries to serialize undefined configuration', () => {
         const config = require(pathToReactGlobalConfiguration).default;

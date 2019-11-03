@@ -112,6 +112,14 @@ function serialize(env) {
 }
 
 function setEnvironment(env) {
+  if (env === undefined) {
+    throw new Error('react-global-configuration - You have to define an environment');
+  }
+
+  if (env !== null && typeof env !== 'string') {
+    throw new Error('react-global-configuration - Unexpected environment value, null or string expected');
+  }
+
   return currentEnvironment = env;
 }
 /* **************************** */
