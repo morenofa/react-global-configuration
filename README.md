@@ -35,7 +35,7 @@ config.set({
 });
 ````
 
-Sets a configuration
+Sets a configuration.
 - __configuration__ - whatever you want to be made available when subsequently importing / requiring get function `react-global-configuration`.
 - __options__ - object optionally containing the following:
     - __options.freeze__ _default: true_ - used to prevent the [freezing](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) of the configuration object.

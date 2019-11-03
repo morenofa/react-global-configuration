@@ -1,5 +1,14 @@
 # Change Log
 
+## [v1.4.0](https://github.com/morenofa/react-global-configuration/tree/v1.3.0) (2019-10-02)
+[Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.3.0...v1.4.0)
+
+**Implemented enhancements:**
+
+- Added functionality to handle configurations per environment.
+- Update dependencies.
+- Add coverage report.
+
 ## [v1.3.0](https://github.com/morenofa/react-global-configuration/tree/v1.3.0) (2018-08-14)
 [Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.2.1...v1.3.0)
 
