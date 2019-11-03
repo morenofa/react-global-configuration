@@ -1,6 +1,6 @@
 # React global configuration
 
-[![Build Status](https://travis-ci.org/morenofa/react-global-configuration.svg?branch=master)](https://travis-ci.org/morenofa/react-global-configuration) [![npm version](https://badge.fury.io/js/react-global-configuration.svg)](https://badge.fury.io/js/react-global-configuration) [![Known Vulnerabilities](https://snyk.io/test/github/morenofa/react-global-configuration/badge.svg?targetFile=package.json)](https://snyk.io/test/github/morenofa/react-global-configuration?targetFile=package.json) [![License](https://img.shields.io/npm/l/react-global-configuration.svg)](https://www.npmjs.com/package/react-global-configuration)
+[![Build Status](https://travis-ci.org/morenofa/react-global-configuration.svg?branch=master)](https://travis-ci.org/morenofa/react-global-configuration) [![Known Vulnerabilities](https://snyk.io/test/github/morenofa/react-global-configuration/badge.svg?targetFile=package.json)](https://snyk.io/test/github/morenofa/react-global-configuration?targetFile=package.json) [![npm version](https://badge.fury.io/js/react-global-configuration.svg)](https://badge.fury.io/js/react-global-configuration)  [![License](https://img.shields.io/npm/l/react-global-configuration.svg)](https://www.npmjs.com/package/react-global-configuration)
 
 ## Purpose
 
