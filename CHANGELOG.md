@@ -1,6 +1,13 @@
 # Change Log
 
-## [v1.4.0](https://github.com/morenofa/react-global-configuration/tree/v1.3.0) (2019-10-02)
+## [v1.4.1](https://github.com/morenofa/react-global-configuration/tree/v1.4.1) (2020-12-13)
+[Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.4.0...v1.4.1)
+
+**Fixed bugs:**
+
+- Fixed vulnerability with `serialize-javascript` package
+
+## [v1.4.0](https://github.com/morenofa/react-global-configuration/tree/v1.4.0) (2019-10-02)
 [Full Changelog](https://github.com/morenofa/react-global-configuration/compare/v1.3.0...v1.4.0)
 
 **Implemented enhancements:**

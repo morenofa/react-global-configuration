@@ -1,6 +1,6 @@
 {
   "name": "react-global-configuration",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "For setting a global config object managed as a requirement",
   "main": "build/index.js",
   "scripts": {
@@ -42,6 +42,6 @@
   "dependencies": {
     "deep-freeze": "0.0.1",
     "object-assign": "^4.1.1",
-    "serialize-javascript": "^2.1.0"
+    "serialize-javascript": "^4.0.0"
   }
 }
