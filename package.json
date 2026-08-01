@@ -3,6 +3,9 @@
   "version": "1.4.1",
   "description": "For setting a global config object managed as a requirement",
   "main": "build/index.js",
+  "engines": {
+    "node": ">=22.23.2"
+  },
   "scripts": {
     "build": "gulp build",
     "test": "gulp build && gulp test",
