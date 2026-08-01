@@ -1,11 +1,10 @@
-/* eslint-env mocha */
 import chai from 'chai';
 import path from 'path';
 import { argv } from 'yargs';
 
 chai.should();
 
-Object.defineProperty(global, "should", {
+Object.defineProperty(global, 'should', {
     value: chai.Should(),
     enumerable: true,
     configurable: true,
@@ -192,7 +191,7 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration).default;
 
         const configuration = {
-            foo: ['bar', 'baz']
+            foo: [ 'bar', 'baz' ]
         };
         config.set(configuration);
 
@@ -204,7 +203,7 @@ describe('react-global-configuration', () => {
         const config = require(pathToReactGlobalConfiguration).default;
 
         const configuration = {
-            foo: ['bar', 'baz']
+            foo: [ 'bar', 'baz' ]
         };
         config.set(configuration);
 
