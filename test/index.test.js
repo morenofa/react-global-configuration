@@ -1,6 +1,5 @@
 import chai from 'chai';
 import path from 'path';
-import { argv } from 'yargs';
 
 chai.should();
 
@@ -12,7 +11,7 @@ Object.defineProperty(global, 'should', {
 });
 
 const expect = chai.expect;
-const pathToReactGlobalConfiguration = argv.lib ? '../lib' : '../build';
+const pathToReactGlobalConfiguration = process.argv.includes('--lib') ? '../lib' : '../build';
 const pathToReactGlobalConfigurationReset = path.join(pathToReactGlobalConfiguration, 'reset');
 
 const reset = require(pathToReactGlobalConfigurationReset).default;
@@ -56,6 +55,41 @@ describe('react-global-configuration', () => {
         config.set(configuration);
 
         config.get().should.deep.equal(configuration);
+    });
+    it('should deeply freeze configuration by default', () => {
+        const config = require(pathToReactGlobalConfiguration).default;
+        const configuration = {
+            nested: {
+                values: [ 'foo' ]
+            }
+        };
+
+        config.set(configuration);
+
+        Object.isFrozen(configuration).should.equal(true);
+        Object.isFrozen(configuration.nested).should.equal(true);
+        Object.isFrozen(configuration.nested.values).should.equal(true);
+    });
+    it('should not freeze configuration when freeze is false', () => {
+        const config = require(pathToReactGlobalConfiguration).default;
+        const configuration = {
+            nested: {}
+        };
+
+        config.set(configuration, { freeze: false });
+
+        Object.isFrozen(configuration).should.equal(false);
+        Object.isFrozen(configuration.nested).should.equal(false);
+    });
+    it('should freeze circular configuration', () => {
+        const config = require(pathToReactGlobalConfiguration).default;
+        const configuration = {};
+        configuration.self = configuration;
+
+        config.set(configuration);
+
+        Object.isFrozen(configuration).should.equal(true);
+        config.get('self').should.equal(configuration);
     });
     it('should throw an error if unrecognised options are passed', () => {
         const config = require(pathToReactGlobalConfiguration).default;

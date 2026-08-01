@@ -8,7 +8,6 @@ exports.serialize = serialize;
 exports.set = set;
 exports.setEnvironment = setEnvironment;
 var _objectAssign = _interopRequireDefault(require("object-assign"));
-var _deepFreeze = _interopRequireDefault(require("deep-freeze"));
 var _serializeJavascript = _interopRequireDefault(require("serialize-javascript"));
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
@@ -55,7 +54,7 @@ function set(newConfiguration) {
     configuration[env] = newConfiguration;
   }
   if (setOptions.freeze !== false && Object.freeze && Object.getOwnPropertyNames) {
-    configuration = (0, _deepFreeze["default"])(configuration);
+    configuration = deepFreeze(configuration);
   } else if (!Object.freeze || !Object.getOwnPropertyNames) {
     sayWarning('react-global-configuration - Could not call freeze as native functions arent\'t available');
   }
@@ -102,6 +101,17 @@ function setEnvironment(env) {
 /* Helpers
 /* **************************** */
 
+function deepFreeze(value) {
+  var seen = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new WeakSet();
+  if (value === null || _typeof(value) !== 'object' && typeof value !== 'function' || seen.has(value)) {
+    return value;
+  }
+  seen.add(value);
+  Object.getOwnPropertyNames(value).forEach(function (property) {
+    return deepFreeze(value[property], seen);
+  });
+  return Object.freeze(value);
+}
 function getEnvironmentConfiguration(env) {
   env = env !== undefined ? env : 'global';
   return configuration && configuration[env] !== undefined ? configuration[env] : null;
